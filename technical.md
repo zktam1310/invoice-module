@@ -8,7 +8,7 @@
 
 ### Core
 - User Authentication is not the point of this case study considering this invoice module will be implemented into an existing system.
-- Three major modules for **Invoice Module**:
+- Four major modules for **Invoice Module**:
   - **Creation & Sharing**
   - **Payment**
   - **Monitoring**
