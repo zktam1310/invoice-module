@@ -32,6 +32,7 @@
 |totalAmount|`number`|
 |paidAmount|`number`|
 |status|`'issued' \| 'partial' \| 'paid \|'cancelled'`|
+|metaData?|`{[field: string]: any}`|
 |updatedAt|`Date`|
 |createdAt|`Date`|
 
@@ -45,7 +46,7 @@
 |totalAmount|`number`|
 |remarks?|`string`|
 
-*assuming a single unified currency.
+*default currency in invoice would be `usdt`, value in other currencies will be computed upon payment made.
 
 ### Transactions
 |_id|ObjectId|
@@ -54,8 +55,11 @@
 |customerId|`ObjectId`|
 |invoiceId|`ObjectId`|
 |amount|`number`|
+|coin?|`'btc' \| 'eth' \| 'usdt' \| 'usdc'`|
 |paymentMethod|`'crypto' \| 'fiat'`|
 |referenceNo?|`string`|
 |metaData?|`{[field: string]: any}`|
 |paidAt|`Date`|
 |createdAt|`Date`|
+
+*`coin` only required for `'crypto'` payment, `'usd'` will be the default for `'fiat'` payment.
