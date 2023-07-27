@@ -7,9 +7,21 @@
 |email|`string`|
 |phoneNo|`string`|
 |address|`string`|
+|walletAddresses|`IUserWalletAddress[]`|
+|bankAccounts?|`IUserBankAccount[]`|
 |organization?|`string`|
 |updatedAt|`Date`|
 |createdAt|`Date`|
+
+#### IUserWalletAddress (Users.$.walletAddresses)
+|address|`string`|
+|-|-|
+|coin|`'btc' \| 'eth' \| 'usdt' \| 'usdc'`|
+
+#### IUserBankAccount (Users.$.bankAccounts)
+|accountNumber|`string`|
+|-|-|
+|swiftCode|`string`|
 
 ### Customers
 |_id|`ObjectId`|
@@ -25,7 +37,7 @@
 ### Invoices
 |_id|`ObjectId`|
 |-|-|
-|items|`array`|
+|items|`IInvoiceItem[]`|
 |subtotalAmount|`number`|
 |taxCharges|`number`|
 |otherCharges|`number`|
@@ -37,7 +49,7 @@
 |createdAt|`Date`|
 
 
-#### Invoices.$.items
+#### IInvoiceItem (Invoices.$.items)
 |title|`string`|
 |-|-|
 |description|`string`|
@@ -46,10 +58,11 @@
 |totalAmount|`number`|
 |remarks?|`string`|
 
-*default currency in invoice would be `usdt`, value in other currencies will be computed upon payment made.
+**remarks**:
+* default currency in invoice would be `usdt`, value in other currencies will be computed upon payment made.
 
 ### Transactions
-|_id|ObjectId|
+|_id|`ObjectId`|
 |-|-|
 |userId|`ObjectId`|
 |customerId|`ObjectId`|
@@ -57,9 +70,24 @@
 |amount|`number`|
 |coin?|`'btc' \| 'eth' \| 'usdt' \| 'usdc'`|
 |paymentMethod|`'crypto' \| 'fiat'`|
+|fromWalletAddress?|`string`|
+|toWalletAddress?|`string`|
+|fromBankAcc?|`ITransactionBankAccount`|
+|toBankAcc?|`ITransactionBankAccount`|
 |referenceNo?|`string`|
 |metaData?|`{[field: string]: any}`|
 |paidAt|`Date`|
 |createdAt|`Date`|
 
-*`coin` only required for `'crypto'` payment, `'usd'` will be the default for `'fiat'` payment.
+#### ITransactionBankAccount (Transactions.\$.fromWalletAddress & Transactions.\$.toWalletAddress)
+|accountNo|`string`|
+|-|-|
+|swiftCode|`string`|
+
+**remarks**:
+* if `(paymentMethod === 'crypto)`
+  * `coin` is required.
+  * `fromWalletAddress` and `toWalletAddress` are required
+* else if `(paymentMethod === 'fiat)`
+  * `'usd'` will be the default currency
+  * `fromWalletAddress` and `toWalletAddress` are required
