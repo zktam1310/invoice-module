@@ -22,7 +22,10 @@
   2. **Payment**
      - `POST /invoice/transaction`: update `invoice` and create `transaction`.
   3. **Monitoring**
-     - `PATCH /invoice/transaction`: update `invoice` and update `transaction`, primarily used for customer to acknowlegde the order/service has been fulfilled, thus releasing the fund to user.
+     - `PATCH /invoice/id`:
+       - primarily used for customer to acknowlegde the order/service has been fulfilled, thus releasing the fund to user.
+       - update `invoice`.
+       - The fund will be sent to the user wallet address/bank account on the server once the `invoice.fulfilledStatus` is updated to `'completed`', system will also update the `transaction.hasReleased`.
      - `GET /invoice`: retrieve all user's `invoices`
      - `GET /invoice/id`: retrieve single `invoice`
      - `GET /invoice/transaction`: retrieve all user's `transactions`
@@ -52,7 +55,7 @@
   3. **Monitoring**
      - User is able to view multiple invoices in table view via `GET /invoice`, or the details of a single invoice `GET /invoice/id`.
      - User is able to view multiple invoice's transactions in table view via `GET /invoice/transaction`, or the details of a single invoice's transaction `GET /invoice/transaction/id`.
-     - Customer is able to acknowledge and approve the release of fund via clicking a button in the invoice sharing view, which make api request to `PATCH /invoice/transaction`.
+     - Customer is able to acknowledge and approve the release of fund via clicking a button in the invoice sharing view, which make api request to `PATCH /invoice/id`.
   4. **Dispute**
      - Customer is able to initiate a dispute case before the invoice is partially/fully paid and before being marked fulfilled, by clicking a button in the invoice sharing view, which make api request to `POST /invoice/dispute`.
      - The process of dispute will however being handled by a customer support agent via emails.
